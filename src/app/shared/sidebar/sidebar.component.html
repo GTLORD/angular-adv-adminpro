@@ -30,7 +30,10 @@
           <ul aria-expanded="false" class="collapse">
             @for (subitem of item.submenu; track $index) {
               <li>
-                <a [routerLink]="subitem.url"> {{ subitem.titulo }} </a>
+                <a [routerLink]="subitem.url"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}">
+                  {{ subitem.titulo }} </a>
               </li>
             }
           </ul>
