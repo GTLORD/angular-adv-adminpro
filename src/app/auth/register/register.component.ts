@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormControlOptions, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from '../../services/usuario.service';
-import { RegisterForm } from '../../interfaces/register-form.interface';
-import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +26,9 @@ export class RegisterComponent {
   } as FormControlOptions);
 
   constructor(private fb: FormBuilder,
-              private usuarioService: UsuarioService ) {}
+              private usuarioService: UsuarioService,
+              private router: Router
+  ) {}
 
   crearUsuario(){
     this.formEnviado = true;
@@ -38,13 +40,14 @@ export class RegisterComponent {
 
     //Realizar creación usuario
     this.usuarioService.crearUsuario( this.registerForm.value)
-        .subscribe(  {
-          next: (r) =>{
-            console.log('usuario creado');
-            console.log(r)      },
-          error: (e) => console.warn(e.error.mensaje),
-          complete: () => console.info('complete')
-  });
+        .subscribe({
+          next: (resp) =>{
+            Swal.fire('Usuario creado', 'El usuario fue creado con éxito','success');
+            this.router.navigateByUrl('/');
+          },error: (err) =>{
+            Swal.fire('Error', err.error.mensaje, 'error')
+          }
+        });
 
   }
 
