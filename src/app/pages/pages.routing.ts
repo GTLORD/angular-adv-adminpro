@@ -9,6 +9,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { authGuard } from '../guards/auth.guard';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -19,9 +20,10 @@ const routes: Routes = [
     canActivate:[ authGuard ],
     children: [
       { path: '', component: DashboardComponent, data: {titulo: 'Dashboard'}},
-      { path: 'progress', component: ProgressComponent, data: {titulo: 'Progress'}},
-      { path: 'grafica1', component: Grafica1Component, data: {titulo: 'Gráficas'}},
       { path: 'account-settings', component: AccountSettingsComponent, data: {titulo: 'Account Settings'}},
+      { path: 'grafica1', component: Grafica1Component, data: {titulo: 'Gráficas'}},
+      { path: 'perfil', component: PerfilComponent, data: {titulo: 'Perfil'}},
+      { path: 'progress', component: ProgressComponent, data: {titulo: 'Progress'}},
       { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'}},
       { path: 'rxjs', component: RxjsComponent, data: {titulo: 'Rxjs'}},
       //{ path: '', redirectTo:'/dashboard', pathMatch: 'full'},

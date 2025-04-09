@@ -54,7 +54,7 @@ export class LoginComponent implements AfterViewInit{
     //console.log("Encoded JWT ID token: " + response.credential);
     this.usuarioService.loginGoogle(response.credential)
     .subscribe( resp => {
-      console.log({login: resp})
+      //console.log({login: resp})
       this.ngZone.run( () => {
         this.router.navigateByUrl('/');
       })
@@ -69,8 +69,8 @@ export class LoginComponent implements AfterViewInit{
       next: (resp) =>{
 
         this.router.navigateByUrl('/');
-        console.log('usuario logueado');
-        console.log(resp)
+        //console.log('usuario logueado');
+        //console.log(resp)
         this.router.navigateByUrl('/')
         if ( this.loginForm.get('remember')?.value){
           localStorage.setItem('email', this.loginForm.get('email')!.value);

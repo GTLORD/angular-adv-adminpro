@@ -8,7 +8,7 @@ import { environment } from '../../environments/environments';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { callback } from 'chart.js/dist/helpers/helpers.core';
+import { Usuario } from '../models/usuario.model';
 
 declare const google: any;
 
@@ -19,10 +19,31 @@ const base_url = environment.base_url;
 })
 export class UsuarioService {
 
+  public usuario!: Usuario;
+
+
   constructor( private http: HttpClient,
                private router: Router,
-               private ngZone: NgZone
-  ) { }
+               private ngZone: NgZone) {
+
+  }
+
+  get token(): string{
+    return localStorage.getItem('token') || '';
+  }
+  get uid(): string{
+    return this.usuario.uid  || '';
+  }
+
+  loginGoogle(token: string){
+    return this.http.post(`${base_url}/login/google`, {token})
+    .pipe(
+        tap( (resp: any) => {
+        //console.log(resp);
+        localStorage.setItem('token', resp.token);
+        })
+    )
+  }
 
   logout(){
     localStorage.removeItem('token');
@@ -37,20 +58,28 @@ export class UsuarioService {
   }
 
 
-  validarToken() : Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
+  validarToken() {
+    google.accounts.id.initialize({
+      client_id:
+        '911957382879-dfskfj5nd5svmni4bsji3o10f9hla5d0.apps.googleusercontent.com',
+    });
+
 
     return this.http.get(`${ base_url }/login/renew`, {
-      headers: {
-        'x-token': token
-      }}).pipe(
-        tap ((resp: any) =>{
-          localStorage.setItem('token', resp.token)
+        headers: { 'x-token': this.token },
+      }).pipe(
+        map ((resp: any) =>{
+          const {email, google, nombre, role, img = '', uid } = resp.usuario;
+          this.usuario = new Usuario(nombre, email,   '', img, google,  role, uid);
+          localStorage.setItem('token', resp.token);
+          return true;
         }),
-        map( resp => true),
+
         catchError(error => of(false))
       );
     }
+
+
 
   crearUsuario ( formData: RegisterForm ) {
     //console.log('Creando usuario');
@@ -66,6 +95,17 @@ export class UsuarioService {
 
   }
 
+  actualizarPerfil(data: {email:string, nombre: string, role?: string}) {
+    data = {
+      ...data,
+      role: this.usuario.role
+    };
+    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, { headers: {
+        'x-token': this.token
+      }
+    });
+  }
+
   login( formData: LoginForm ){
     //console.log('Creando usuario');
 
@@ -77,16 +117,5 @@ export class UsuarioService {
               )
   }
 
-  loginGoogle(token: string){
-    return this.http.post(`${base_url}/login/google`, {token})
-    .pipe(
-        tap( (resp: any) => {
-        //console.log(resp);
-        localStorage.setItem('token', resp.token);
-        })
-    )
 
-
-
-  }
 }
