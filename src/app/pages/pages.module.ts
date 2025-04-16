@@ -17,6 +17,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { SharedModule } from '../shared/shared.module';
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 
 
 
@@ -31,6 +32,7 @@ import { SharedModule } from '../shared/shared.module';
     ProgressComponent,
     PromesasComponent,
     RxjsComponent,
+    UsuariosComponent,
   ],
   exports: [
     AccountSettingsComponent,

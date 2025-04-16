@@ -16,9 +16,17 @@ export class SidebarService {
         {titulo: 'Promesas', url: '/dashboard/promesas'},
         {titulo: 'Rxjs', url: '/dashboard/rxjs'},
       ]
-
-
-    }
+    },
+    {
+      titulo: 'Mantenimientos',
+      icono: 'mdi mdi-wrench',
+      submenu:[
+        {titulo: 'Usuarios', url: 'usuarios'},
+        {titulo: 'Medicos', url: 'medicos'},
+        {titulo: 'Hospitales', url: '/hospitales'},
+      ]
+    },
   ];
+
   constructor() { }
 }
