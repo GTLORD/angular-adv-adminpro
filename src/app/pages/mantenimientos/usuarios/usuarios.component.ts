@@ -33,8 +33,8 @@ export class UsuariosComponent implements OnInit, OnDestroy{
       delay(1000)
     )
     .subscribe( img => {
-      //this.listarUsuarios()
-      console.log(img);
+      this.listarUsuarios()
+      //console.log(img);
 
     });
   }
@@ -73,7 +73,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
     }
     this.busquedasService.buscar('usuarios', termino)
     .subscribe(resultado => {
-      console.log(resultado);
+      //console.log(resultado);
       this.usuarios = resultado;
       }
     )
@@ -114,12 +114,12 @@ export class UsuariosComponent implements OnInit, OnDestroy{
     //console.log(usuario);
     this.usuarioService.guardarUsuario(usuario)
     .subscribe( resp =>{
-      console.log(resp);
+      //console.log(resp);
     })
   }
 
   abrirModalImg(usuario: Usuario){
-    console.log(usuario);
+    //console.log(usuario);
 
     this.modalImagenService.abrirModalImg('usuarios', usuario.uid, usuario.img);
 

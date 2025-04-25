@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { map, pipe } from 'rxjs';
 
 import { environment } from '../../environments/environments';
+
+import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.base_url;
@@ -26,10 +29,18 @@ export class BusquedasService {
     }
   }
 
-  private trasformarRegistros( resultado: any[]): Usuario[]{
+  private transformarUsuarios( resultado: any[]): Usuario[]{
     return resultado.map(
       user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
     )
+  }
+
+  private transformarHospitales(resultados: any): Hospital[]{
+    return resultados
+  }
+
+    private transformarMedicos(resultados: any): Medico[]{
+    return resultados
   }
 
   buscar(
@@ -43,13 +54,17 @@ export class BusquedasService {
             map((resp: any ) => {
               switch (tipo) {
                 case 'usuarios':
-                  return this.trasformarRegistros( resp.resultado )
-
-
+                  return this.transformarUsuarios( resp.resultado )
+                case 'hospitales':
+                  return this.transformarHospitales( resp.resultado )
+                case 'medicos':
+                  return this.transformarMedicos( resp.resultado )
                 default:
                   return [];
               }
-            } ));
+            }
+          )
+        );
   }
 
 }
