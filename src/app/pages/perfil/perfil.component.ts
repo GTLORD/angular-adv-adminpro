@@ -44,12 +44,12 @@ export class PerfilComponent implements OnInit {
       const { nombre, email } = this.perfilForm.value;
         this.usuario.nombre = nombre;
         this.usuario.email = email;
-        //console.log(resp);
+        //console.log(nombre, email);
         Swal.fire('Guardado', 'Cambios fueron guardados', 'success');
       },
       error: (err) => {
-        //  console.log( err);
-        //  console.log(err.error.mensaje);
+          //console.log( err);
+          //console.log(err.error.mensaje);
         Swal.fire('Error', err.error.mensaje, 'error');
       }
     });

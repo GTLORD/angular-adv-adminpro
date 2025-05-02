@@ -13,12 +13,12 @@ export class SidebarComponent {
   public usuario: Usuario;
   public imgUrl = '';
 
-  public menuItems: any[];
+  //public menuItems: any[];
 
 
-  constructor(private sideService: SidebarService,
+  constructor(public sidebarService: SidebarService,
               private usuarioService: UsuarioService){
-    this.menuItems = sideService.menu;
+    //this.menuItems = sideService.menu;
     this.usuario = usuarioService.usuario;
     this.imgUrl = usuarioService.usuario.imagenUrl;
 

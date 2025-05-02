@@ -13,13 +13,13 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   return usuarioService.validarToken()
 
-    .pipe(
-      tap( estaAutenticado =>{
+  .pipe(
+    tap( estaAutenticado =>{
 
-          if (!estaAutenticado) {
-              router.navigateByUrl('/login');
-          }
+        if (!estaAutenticado) {
+            router.navigateByUrl('/login');
+        }
 
-      })
-    );
+    })
+  );
 }
